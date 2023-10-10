@@ -1,39 +1,26 @@
-const localStorageKey = 'name-memory';
+
 const typeArea = document.getElementById('name');
 const save = document.getElementById('good');
 const remove = document.getElementById('bad');
 
-const hiAll = [];
-
-class AllOfYou {
-    constructor(_name) {
-        this.name = _name;
-    }
-}
-
-const renderList = function () {
-    const listItems = document.getElementById('list');
-
-    hiAll.forEach((person) => {
-        const newItem = document.createElement('li');
-        newItem.innerText = person.name; //acceddo alla prop nome di ogni elemento
-        listItems.appendChild(newItem);
-    });
-};
 
 const saveAction = () => {
     const saved = typeArea.value;
-    localStorage.setItem(localStorageKey, saved);
+    localStorage.setItem('localStorageKey', saved);
     alert('salvato!');
-    hiAll.push(new AllOfYou(saved)); // Aggiungo nome a hiAll 
-    renderList( saved); /* RICHIAMO LA FUNZIONE PER CREARE LI */
-};
+    localStorage.getItem('saved')
+    typeArea.value= ''
+    const newPerson = document.getElementById('list');
+    newPerson.innerHTML = `${saved}`; //acceddo alla prop nome di ogni elemento  
+    };
+   
 
 const removeAction = () => {
     localStorage.removeItem(localStorageKey);
-    hiAll.length = 0;
-    renderList();
 };
+
+
+
 
 save.addEventListener('click', saveAction);
 remove.addEventListener('click', removeAction);
@@ -64,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // funzione per aggiornare contatore ad ogni secondo
     const intervalId = setInterval(incrementCounter, 1000);
 
-    // Salva il valore corrente del contatore prima della chiusura della finestra
+    // Salva il valore corrente del contatore prima del refresh della finestra
     window.addEventListener('beforeunload', function () {
         sessionStorage.setItem('savedSeconds', seconds.toString());
     });
